@@ -1,5 +1,4 @@
 import React from 'react';
-import {StatusBar} from 'react-native';
 import Home from './src/screens/Home';
 
 import {NativeBaseProvider} from 'native-base';
@@ -7,10 +6,10 @@ import {NativeBaseProvider} from 'native-base';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Laporan from './src/screens/Laporan';
-// import Lapor from './src/screens/Lapor';
 import Peta from './src/screens/Peta';
 import Berita from './src/screens/Berita';
 import Lapor from './src/screens/Lapor';
+import LaporanDetail from './src/screens/LaporanDetail';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -31,6 +30,11 @@ export default function App() {
             name="Laporan"
             component={Laporan}
             options={{headerShown: true}}
+          />
+          <Stack.Screen
+            name="LaporanDetail"
+            component={LaporanDetail}
+            options={{headerShown: true, title: 'Detail Laporan'}}
           />
           <Stack.Screen
             name="Berita"
