@@ -11,12 +11,14 @@ import {
 } from 'native-base';
 import {Image, TouchableOpacity} from 'react-native';
 import moment from 'moment';
+import {useNavigation} from '@react-navigation/native';
 
 export default function LaporanSingle({laporan}) {
   const date = moment(laporan.created_at, 'YYYY-MM-DDTHH:mm:ssZ', 'ID').format(
     'DD-MM-YYYY HH:mm',
   );
-
+  const navigation = useNavigation();
+  // console.log(navigation);
   const Status = () => {
     if (laporan.status === 1) {
       return (
@@ -79,9 +81,7 @@ export default function LaporanSingle({laporan}) {
   };
   return (
     <TouchableOpacity
-      onPress={() => {
-        console.log(laporan.id);
-      }}>
+      onPress={() => navigation.navigate('LaporanDetail', {id: laporan.id})}>
       <Box alignItems="center" m="2">
         <Box
           // maxW="72"
