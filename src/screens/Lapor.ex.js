@@ -1,36 +1,32 @@
-import {
-  Text,
-  ScrollView,
-  Image,
-  PermissionsAndroid,
-  StatusBar,
-} from 'react-native';
 import React from 'react';
 import {
   Box,
-  AspectRatio,
-  Button,
-  Icon,
-  Center,
   FormControl,
   Stack,
   TextArea,
+  Center,
+  Text,
+  Button,
+  StatusBar,
+  AspectRatio,
+  Icon,
   Input,
+  ScrollView,
+  Heading,
   HStack,
   Spinner,
-  Heading,
 } from 'native-base';
-import {CameraIcon, PaperAirplaneIcon} from 'react-native-heroicons/outline';
+import {Image} from 'react-native';
+// import Ionicons from '@expo/vector-icons/Ionicons';
+// import * as ImagePicker from 'expo-image-picker';
+// import * as Location from 'expo-location';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
-
-import Geolocation from 'react-native-geolocation-service';
-import {launchImageLibrary} from 'react-native-image-picker';
 import Success from '../components/Success';
-import Error from '../components/Error';
+// import 'yup-phone-lite';
 
-const Lapor = ({navigation}) => {
+export default function LaporEx({navigation}) {
   const [image, setImage] = React.useState(null);
 
   const [location, setLocation] = React.useState(null);
@@ -38,45 +34,37 @@ const Lapor = ({navigation}) => {
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
 
-  const [isLoading, setIsLoading] = React.useState(false);
-
-  React.useEffect(() => {
-    getLocation();
-  }, []);
+  const [isLoading, setIsloading] = React.useState(false);
 
   const pickImage = async () => {
-    console.log('Open Image Picker');
-    let picker_option = {
-      mediaType: 'photo',
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsMultipleSelection: false,
+      allowsEditing: true,
+      aspect: [16, 9],
       quality: 0.5,
-      maxHeight: 900,
-      maxWidth: 1600,
-    };
+    });
 
-    const result = await launchImageLibrary(picker_option, setImage);
-    // console.log(image);
-    if (result.didCancel) {
-      console.log('User cancelled image picker');
-    } else if (result.error) {
-      console.log('ImagePicker Error: ', result.error);
-    } else if (result.customButton) {
-      console.log('User tapped custom button: ', result.customButton);
-    } else {
+    if (!result.canceled) {
       setImage(result.assets[0]);
-      console.log('result Image Picker', JSON.stringify(result));
     }
   };
 
   const submit = async values => {
-    console.log('Submit Handler');
-    setIsLoading(true);
-
+    setIsloading(true);
     const data = new FormData();
+
+    let filename = image.uri.split('/').pop();
+
+    let match = /\.(\w+)$/.exec(filename);
+    let type = match ? `image/${match[1]}` : `image`;
+
     data.append('gambar', {
-      type: image.type,
-      name: image.fileName,
+      type: type,
+      name: filename,
       uri: image.uri,
     });
+
     data.append('keterangan', values.keterangan);
     data.append('alamat', values.alamat);
     data.append('namaPelapor', values.namaPelapor);
@@ -85,7 +73,6 @@ const Lapor = ({navigation}) => {
     data.append('latitude', location?.coords?.latitude);
     data.append('longitude', location?.coords?.longitude);
 
-    console.log(data._parts);
     try {
       const response = await axios.post(
         'https://sinarpju.digitaldev.id/api/laporan/',
@@ -98,129 +85,49 @@ const Lapor = ({navigation}) => {
       );
 
       setIsSuccess(true);
-      setIsLoading(false);
-      console.log(response.data);
-      return;
+      setIsloading(false);
     } catch (error) {
+      setIsloading(false);
+
       if (error.response) {
+        // Update UI accordingly
         console.log(error.response.data);
         console.log(error.response.status);
-        setIsError({
-          status: true,
-          type: 'Error Response Validation Error',
-          message: error.response.data?.message,
-        });
-        setIsLoading(false);
-        return;
+        console.log(error.response.headers);
+        alert(error.response.data);
       } else if (error.request) {
         console.log(error.request);
-        setIsError({
-          status: true,
-          type: 'Error Request / Bad Request.',
-          message: error.request,
-        });
-        setIsLoading(false);
-        return;
-      } else {
-        console.log(`Unknown Error message: ${error.message}`);
-        setIsError({
-          status: true,
-          type: 'Unknown Error .',
-          message: error.message,
-        });
-      }
-    }
-    console.log('Unknown Error message');
-    setIsError({
-      status: true,
-      type: 'Unknown Error .',
-      message: 'Network Error or Server down.',
-    });
-    setIsLoading(false);
-  };
-
-  const requestLocationPermission = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          title: 'Permohonan Ijin Lokasi',
-          message: 'Aplikasi memohon ijin akses lokasi ?',
-          buttonNeutral: 'Tanya nanti',
-          buttonNegative: 'Batal',
-          buttonPositive: 'OK',
-        },
-      );
-
-      console.log('granted', granted);
-      if (granted === 'granted') {
-        console.log('GRANTED => You can use Geolocation');
-        return true;
-      } else {
-        console.log('DENY => You cannot use Geolocation');
-        return false;
-      }
-    } catch (err) {
-      return false;
-    }
-  };
-
-  const getLocation = () => {
-    const result = requestLocationPermission();
-
-    result.then(res => {
-      console.log('res is:', res);
-      if (res) {
-        Geolocation.getCurrentPosition(
-          position => {
-            console.log(position);
-            setLocation(position);
-          },
-          error => {
-            // See error code charts below.
-            console.log(error.code, error.message);
-            setLocation(false);
-          },
-          {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+        alert(
+          'Server mengalami gangguan network. Mohon coba beberapa saat lagi.',
         );
+      } else {
+        console.log(`Error message: ${error.message}`);
       }
-    });
+    }
   };
+
+  const getLocation = async () => {
+    console.log('Try to request location');
+    let {status} = await Location.requestForegroundPermissionsAsync();
+
+    if (status !== 'granted') {
+      setErrorMsg('Permission to access location was denied');
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    setLocation(location);
+  };
+
+  React.useEffect(() => {
+    getLocation();
+  }, []);
 
   const handleSuccess = () => {
-    console.log('Success UI Rendered');
-
+    console.log('oke');
     setIsSuccess(false);
     navigation.popToTop();
   };
-
-  if (isSuccess) {
-    return <Success handleSuccess={handleSuccess} />;
-  }
-
-  const handleError = () => {
-    console.log('Error UI Rendered');
-    setIsError(false);
-    // navigation.popToTop();
-  };
-
-  if (isError) {
-    return <Error handleError={handleError} error={isError} />;
-  }
-
-  //   VALIDATION SCHEMA YUP
-  const phoneRegExp =
-    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-
-  const ValidationSchema = yup.object().shape({
-    namaPelapor: yup.string().min(2).required('Nama Pelapor wajib diisi.'),
-    keterangan: yup.string().required('Keterangan Gangguan wajib diisi.'),
-    alamat: yup.string().required('Nama Jalan wajib diisi.'),
-    noHp: yup
-      .string()
-      .matches(phoneRegExp, 'Nomor HP tidak Valid')
-      .min(9, 'Minimal 9 Angka'),
-  });
 
   if (isLoading) {
     return (
@@ -233,24 +140,32 @@ const Lapor = ({navigation}) => {
     );
   }
 
+  if (isSuccess) {
+    return <Success handleSuccess={handleSuccess} />;
+  }
+
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
+  const ValidationSchema = yup.object().shape({
+    namaPelapor: yup.string().min(2).required('Nama Pelapor wajib diisi.'),
+    keterangan: yup.string().required('Keterangan Gangguan wajib diisi.'),
+    alamat: yup.string().required('Nama Jalan wajib diisi.'),
+    noHp: yup.string().matches(phoneRegExp, 'Nomor HP tidak Valid'),
+  });
+
   return (
     <ScrollView>
-      <StatusBar barStyle="light-content" backgroundColor="#1e3a8a" />
       <Box alignItems="center" flex={1}>
+        {/* <StatusBar barStyle="light-content" backgroundColor="#1e3a8a" /> */}
         <AspectRatio w="100%" ratio={16 / 9} backgroundColor={'gray.300'}>
-          <Image
-            source={{
-              uri: image?.uri
-                ? image?.uri
-                : 'https://placehold.co/600x400/cccccc/fff.png?text=Gambar+laporan',
-            }}
-          />
+          <Image source={{uri: image?.uri}}></Image>
         </AspectRatio>
         <Button
           size="lg"
           my="4"
           w="80%"
-          leftIcon={<Icon as={CameraIcon} name="camera-outline" size="lg" />}
+          leftIcon={<Icon as={Ionicons} name="camera-outline" size="lg" />}
           onPress={pickImage}>
           Pilih Gambar
         </Button>
@@ -335,7 +250,6 @@ const Lapor = ({navigation}) => {
                         onBlur={handleBlur('noHp')}
                         value={values.noHp}
                         onChangeText={handleChange('noHp')}
-                        inputMode="tel"
                       />
                       <FormControl.ErrorMessage>
                         {errors.noHp}
@@ -352,9 +266,7 @@ const Lapor = ({navigation}) => {
                     size="lg"
                     m="4"
                     // w="100%"
-                    rightIcon={
-                      <Icon as={PaperAirplaneIcon} name="send" size="md" />
-                    }
+                    rightIcon={<Icon as={Ionicons} name="send" size="md" />}
                     onPress={handleSubmit}
                     // isLoading={isLoading || !image}
                     isLoading={!isValid || !location || !image}>
@@ -368,6 +280,4 @@ const Lapor = ({navigation}) => {
       </Box>
     </ScrollView>
   );
-};
-
-export default Lapor;
+}

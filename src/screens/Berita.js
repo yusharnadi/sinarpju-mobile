@@ -23,7 +23,6 @@ function BeritaFlat() {
     );
   }
 
-  console.log(data);
   if (data && data.length >= 1) {
     return (
       <FlatList

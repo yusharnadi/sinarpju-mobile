@@ -1,5 +1,7 @@
 import React from 'react';
+import {StatusBar} from 'react-native';
 import Home from './src/screens/Home';
+
 import {NativeBaseProvider} from 'native-base';
 // import Login from './src/screens/Login';
 import {NavigationContainer} from '@react-navigation/native';
@@ -8,18 +10,20 @@ import Laporan from './src/screens/Laporan';
 // import Lapor from './src/screens/Lapor';
 import Peta from './src/screens/Peta';
 import Berita from './src/screens/Berita';
+import Lapor from './src/screens/Lapor';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
+    //
     <NativeBaseProvider>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
+            // statusBarStyle: 'light',
             headerStyle: {backgroundColor: '#1e3a8a'},
             headerTintColor: '#fff',
-            statusBarStyle: 'light',
           }}>
           <Stack.Screen name="Home" component={Home} />
           {/* <Stack.Screen name="Login" component={Login} /> */}
@@ -33,11 +37,11 @@ export default function App() {
             component={Berita}
             options={{headerShown: true}}
           />
-          {/* <Stack.Screen
+          <Stack.Screen
             name="Lapor"
             component={Lapor}
             options={{title: 'Buat Laporan', headerShown: true}}
-          /> */}
+          />
           <Stack.Screen
             name="Peta"
             component={Peta}
