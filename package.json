@@ -17,6 +17,7 @@
     "@fortawesome/react-native-fontawesome": "^0.3.0",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
+    "@rnmapbox/maps": "^10.0.11-rc.1",
     "axios": "^1.4.0",
     "formik": "^2.4.2",
     "moment": "^2.29.4",
