@@ -8,10 +8,12 @@ import {
   Stack,
   Heading,
   Center,
+  Icon,
 } from 'native-base';
 import {Image, TouchableOpacity} from 'react-native';
 import moment from 'moment';
 import {useNavigation} from '@react-navigation/native';
+import {ClockIcon} from 'react-native-heroicons/outline';
 
 export default function LaporanSingle({laporan}) {
   const date = moment(laporan.created_at, 'YYYY-MM-DDTHH:mm:ssZ', 'ID').format(
@@ -126,6 +128,7 @@ export default function LaporanSingle({laporan}) {
               space={4}
               justifyContent="space-between">
               <HStack alignItems="center">
+                <Icon as={ClockIcon} size="sm" />
                 <Text
                   color="coolGray.600"
                   _dark={{

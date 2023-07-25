@@ -84,8 +84,6 @@ const Lapor = ({navigation}) => {
     data.append('status', 1);
     data.append('latitude', location?.coords?.latitude);
     data.append('longitude', location?.coords?.longitude);
-
-    console.log(data._parts);
     try {
       const response = await axios.post(
         'https://sinarpju.digitaldev.id/api/laporan/',
