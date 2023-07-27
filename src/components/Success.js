@@ -2,7 +2,7 @@ import React from 'react';
 import {AspectRatio, Box, Button, Heading, Icon} from 'native-base';
 import SuccessIcon from '../assets/success.svg';
 import {HomeIcon} from 'react-native-heroicons/outline';
-export default function Success({handleSuccess}) {
+export default function Success({handleSuccess, title}) {
   // console.log(handleSuccess);
   return (
     <Box
@@ -12,7 +12,7 @@ export default function Success({handleSuccess}) {
       p="5"
       background="white">
       <Heading size="sm" my="4">
-        Berhasil Membuat laporan
+        {title}
       </Heading>
       <Box w="100%" maxW="300px">
         <AspectRatio ratio="16/9">

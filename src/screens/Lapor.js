@@ -193,7 +193,12 @@ const Lapor = ({navigation}) => {
   };
 
   if (isSuccess) {
-    return <Success handleSuccess={handleSuccess} />;
+    return (
+      <Success
+        handleSuccess={handleSuccess}
+        title="Berhasil membuat laporan."
+      />
+    );
   }
 
   const handleError = () => {
@@ -203,7 +208,13 @@ const Lapor = ({navigation}) => {
   };
 
   if (isError) {
-    return <Error handleError={handleError} error={isError} />;
+    return (
+      <Error
+        handleError={handleError}
+        error={isError}
+        title="Gagal membuat laporan."
+      />
+    );
   }
 
   //   VALIDATION SCHEMA YUP

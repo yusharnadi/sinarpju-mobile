@@ -2,7 +2,7 @@ import React from 'react';
 import {AspectRatio, Box, Button, Heading, Icon, Text} from 'native-base';
 import ErrorIcon from '../assets/error.svg';
 import {HomeIcon} from 'react-native-heroicons/outline';
-export default function Error({handleError, error}) {
+export default function Error({handleError, error, title}) {
   // console.log(handleSuccess);
   return (
     <Box
@@ -12,7 +12,7 @@ export default function Error({handleError, error}) {
       p="5"
       background="white">
       <Heading size="sm" my="4" color="red.900">
-        Gagal Membuat laporan !!!
+        {title} !!!
       </Heading>
       <Box w="100%" maxW="300px">
         <AspectRatio ratio="16/9">
@@ -30,7 +30,7 @@ export default function Error({handleError, error}) {
         w="100%"
         leftIcon={<Icon as={HomeIcon} size="md" />}
         onPress={() => handleError()}>
-        Beranda
+        Kembali
       </Button>
     </Box>
   );

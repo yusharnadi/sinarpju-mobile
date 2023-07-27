@@ -11,7 +11,7 @@ function BeritaFlat() {
     fetcher,
   );
 
-  if (error) return <Text>failed to load</Text>;
+  if (error) return <Text>Gagal memuat berita.</Text>;
   if (isLoading) {
     return (
       <HStack space={2} justifyContent="center" m="5">

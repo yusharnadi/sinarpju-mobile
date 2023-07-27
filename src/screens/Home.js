@@ -22,10 +22,49 @@ import {
   CalendarDaysIcon,
 } from 'react-native-heroicons/outline';
 import LaporanList from '../components/LaporanList';
+import axios from 'axios';
+import {Host} from '../utils/Host';
+import Loading from '../components/Loading';
+import LaporanSingle from '../components/LaporanSingle';
+import {useIsFocused} from '@react-navigation/native';
 
 export default function Home({navigation}) {
+  const [laporan, setLaporan] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const isActive = useIsFocused();
+  const fetchLaporan = () => {
+    setIsLoading(true);
+    axios
+      .get(`${Host}laporan?limit=20`)
+      .then(function (response) {
+        setLaporan(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+        console.log('Done Fetching Laporan HOme');
+        setIsLoading(false);
+      });
+  };
+
+  React.useEffect(() => {
+    fetchLaporan();
+  }, [isActive]);
+
+  const LaporanCollection = () => {
+    if (laporan && laporan.length > 0) {
+      let list = laporan.map(item => {
+        return <LaporanSingle laporan={item} />;
+      });
+      return list;
+    }
+  };
+
   return (
     <SafeAreaView>
+      {console.log('ui render')}
       <StatusBar barStyle="light-content" backgroundColor="#1e3a8a" />
       <Box bg="muted.50" w="full">
         <ScrollView contentContainerStyle={{paddingBottom: 20}}>
@@ -199,7 +238,15 @@ export default function Home({navigation}) {
             flexDirection="row"
             flexWrap="wrap"
             justifyContent="center">
-            <LaporanList />
+            {/* <LaporanList /> */}
+            {isLoading ?? <Loading />}
+            {laporan.success && laporan.data.length > 0 ? (
+              laporan.data.map(item => {
+                return <LaporanSingle key={item.id} laporan={item} />;
+              })
+            ) : (
+              <Loading />
+            )}
           </Box>
         </ScrollView>
       </Box>

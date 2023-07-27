@@ -142,11 +142,16 @@ const LaporanDetail = ({route, navigation}) => {
     console.log('Success UI Rendered');
 
     setIsSuccess(false);
-    navigation.popToTop();
+    navigation.navigate('Home');
   };
 
   if (isSuccess) {
-    return <Success handleSuccess={handleSuccess} />;
+    return (
+      <Success
+        handleSuccess={handleSuccess}
+        title="Berhasil menghapus laporan."
+      />
+    );
   }
 
   const handleError = () => {
@@ -156,7 +161,13 @@ const LaporanDetail = ({route, navigation}) => {
   };
 
   if (isError) {
-    return <Error handleError={handleError} error={isError} />;
+    return (
+      <Error
+        handleError={handleError}
+        error={isError}
+        title="Gagal menghapus laporan."
+      />
+    );
   }
 
   return (
