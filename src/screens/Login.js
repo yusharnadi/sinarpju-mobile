@@ -11,14 +11,14 @@ import {
   Box,
   Icon,
 } from 'native-base';
-// import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import {XMarkIcon} from 'react-native-heroicons/solid';
 
 export default function Login({navigation}) {
   const [formData, setData] = React.useState({});
   return (
     <Box flex={1} safeArea>
       <TouchableOpacity onPress={() => navigation.popToTop()}>
-        <Icon as={FontAwesome5} name="times" color="muted.900" size="7" m="5" />
+        <Icon as={XMarkIcon} color="muted.900" size="7" m="5" />
       </TouchableOpacity>
       <Center flex={1}>
         <VStack width="90%" mx="3" maxW="300px">
@@ -33,7 +33,7 @@ export default function Login({navigation}) {
               Email
             </FormControl.Label>
             <Input
-              placeholder="John"
+              placeholder="email@sinarpju.id"
               onChangeText={value => setData({...formData, name: value})}
             />
             <FormControl.ErrorMessage
@@ -51,7 +51,7 @@ export default function Login({navigation}) {
               Password
             </FormControl.Label>
             <Input
-              placeholder="John"
+              placeholder="xxx"
               onChangeText={value => setData({...formData, name: value})}
             />
             <TouchableOpacity>
