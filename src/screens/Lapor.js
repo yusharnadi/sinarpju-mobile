@@ -358,14 +358,13 @@ const Lapor = ({navigation}) => {
                     </Text>
                   </FormControl>
                   <Button
+                    background="blue.900"
                     size="lg"
                     m="4"
-                    // w="100%"
                     rightIcon={
                       <Icon as={PaperAirplaneIcon} name="send" size="md" />
                     }
                     onPress={handleSubmit}
-                    // isLoading={isLoading || !image}
                     isLoading={!isValid || !location || !image}>
                     Buat Laporan
                   </Button>
