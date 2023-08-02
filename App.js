@@ -6,11 +6,11 @@ import Login from './src/screens/Login';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Laporan from './src/screens/Laporan';
-import Peta from './src/screens/Peta';
 import Berita from './src/screens/Berita';
 import Lapor from './src/screens/Lapor';
 import LaporanDetail from './src/screens/LaporanDetail';
 import Saran from './src/screens/Saran';
+import BeritaDetail from './src/screens/BeritaDetail';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -52,9 +52,9 @@ export default function App() {
             options={{title: 'Masukan & Saran', headerShown: true}}
           />
           <Stack.Screen
-            name="Peta"
-            component={Peta}
-            options={{title: 'PETA PJU', headerShown: true}}
+            name="BeritaDetail"
+            component={BeritaDetail}
+            options={{title: 'Detail Berita', headerShown: true}}
           />
         </Stack.Navigator>
       </NavigationContainer>

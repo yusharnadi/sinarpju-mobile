@@ -7,7 +7,7 @@ import BeritaSingle from '../components/BeritaSingle';
 
 function BeritaFlat() {
   const {data, error, isLoading} = useSWR(
-    'https://mediacenter.singkawangkota.go.id/wp-json/wp/v2/posts?category=65',
+    'https://mediacenter.singkawangkota.go.id/wp-json/wp/v2/posts?categories=65',
     fetcher,
   );
 
