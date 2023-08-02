@@ -1,11 +1,11 @@
-import {View} from 'react-native';
+/* eslint-disable no-alert */
+
 import React from 'react';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 import {
   Button,
-  Center,
   FormControl,
   Icon,
   Stack,
@@ -14,18 +14,39 @@ import {
   Box,
 } from 'native-base';
 import {PaperAirplaneIcon} from 'react-native-heroicons/outline';
+import Loading from '../components/Loading';
+import {Host} from '../utils/Host';
 
 //   VALIDATION SCHEMA YUP
 const ValidationSchema = yup.object().shape({
   nama: yup.string().min(2).required('Nama wajib diisi.'),
   saran: yup.string().required('Masukan dan Saran wajib diisi.'),
 });
+
 const Saran = () => {
-  function submit(values) {
-    console.log(values);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  if (isLoading) {
+    return <Loading />;
   }
+
+  function submit(values) {
+    setIsLoading(true);
+    console.log(values);
+
+    axios
+      .post(`${Host}saran`, values)
+      .then(result => {
+        console.log(result.data);
+        alert('Berhasil mengirim Masukan dan Saran');
+      })
+      .catch(() => {
+        alert('Gagal mengirim Masukan dan Saran, Coba lagi beberapa saat.');
+      })
+      .finally(() => setIsLoading(false));
+  }
+
   return (
-    // <Center background="white" w="full" px="5" flex="1">
     <Box background="white" w="full" px="5" flex="1" alignItems="center">
       <Formik
         validationSchema={ValidationSchema}
@@ -58,7 +79,7 @@ const Saran = () => {
                   Masukan keterangan gangguan.
                 </FormControl.HelperText>
                 <FormControl.ErrorMessage>
-                  {errors.keterangan}
+                  {errors.saran}
                 </FormControl.ErrorMessage>
               </Stack>
             </FormControl>
