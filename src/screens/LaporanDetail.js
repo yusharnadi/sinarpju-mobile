@@ -43,7 +43,7 @@ const LaporanDetail = ({route, navigation}) => {
   const getData = async () => {
     try {
       let res = await axios.get(`${Host}laporan/${id}`);
-      console.log(res.data.data);
+      // console.log(res.data.data);
       setData(res.data.data);
       setIsLoading(false);
     } catch (err) {

@@ -26,7 +26,7 @@ const BeritaDetail = ({route, navigation}) => {
       )
       .then(result => {
         setBerita(result.data);
-        console.log(result.data.content.rendered);
+        // console.log(result.data.content.rendered);
       })
       .catch(error => {
         setIsError(error);
