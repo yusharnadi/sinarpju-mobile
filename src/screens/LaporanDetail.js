@@ -24,6 +24,7 @@ import {Formik} from 'formik';
 import * as yup from 'yup';
 import Success from '../components/Success';
 import Error from '../components/Error';
+import Status from '../components/Status';
 
 const LaporanDetail = ({route, navigation}) => {
   const {id} = route.params;
@@ -231,6 +232,13 @@ const LaporanDetail = ({route, navigation}) => {
               />
             </Mapbox.MapView>
           </Box>
+          <Text px="5" py={2} bold>
+            Status Laporan
+          </Text>
+          <Box p="5" backgroundColor="white">
+            {data && <Status status={data.status} />}
+          </Box>
+
           <Box p="5">
             <Button
               onPress={() => setShowModal(true)}
@@ -294,8 +302,11 @@ const LaporanDetail = ({route, navigation}) => {
                       }}>
                       Cancel
                     </Button>
-                    <Button isLoading={!isValid} onPress={handleSubmit}>
-                      Save
+                    <Button
+                      isLoading={!isValid}
+                      onPress={handleSubmit}
+                      colorScheme="red">
+                      Hapus
                     </Button>
                   </Button.Group>
                 </Modal.Footer>
