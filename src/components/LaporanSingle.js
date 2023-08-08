@@ -16,7 +16,7 @@ import {useNavigation} from '@react-navigation/native';
 import {ClockIcon} from 'react-native-heroicons/outline';
 
 export default function LaporanSingle({laporan}) {
-  const date = moment(laporan.created_at, 'YYYY-MM-DDTHH:mm:ssZ', 'ID').format(
+  const date = moment(laporan.created_at, 'YYYY-MM-DDTHH:mm:ssZ').format(
     'DD-MM-YYYY HH:mm',
   );
   const navigation = useNavigation();
