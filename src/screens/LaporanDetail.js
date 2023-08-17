@@ -13,6 +13,7 @@ import {
   FormControl,
   Input,
   Stack,
+  Avatar,
 } from 'native-base';
 import axios from 'axios';
 import {Host} from '../utils/Host';
@@ -25,10 +26,12 @@ import * as yup from 'yup';
 import Success from '../components/Success';
 import Error from '../components/Error';
 import Status from '../components/Status';
+import Petugas from '../components/Petugas';
 
 const LaporanDetail = ({route, navigation}) => {
   const {id} = route.params;
   const [data, setData] = React.useState(null);
+  const [petugas, setPetugas] = React.useState(null);
   const [error, setError] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const [showModal, setShowModal] = React.useState(false);
@@ -45,6 +48,7 @@ const LaporanDetail = ({route, navigation}) => {
       let res = await axios.get(`${Host}laporan/${id}`);
       // console.log(res.data.data);
       setData(res.data.data);
+      setPetugas(res.data.petugas);
       setIsLoading(false);
     } catch (err) {
       if (err.response) {
@@ -238,7 +242,17 @@ const LaporanDetail = ({route, navigation}) => {
           <Box p="5" backgroundColor="white">
             {data && <Status status={data.status} />}
           </Box>
-
+          {petugas.length > 0 && (
+            <Text px="5" py={2} bold>
+              Petugas Lapangan
+            </Text>
+          )}
+          <Box p="5" backgroundColor="white">
+            {petugas &&
+              petugas.map(p => {
+                return <Petugas key={p.idPetugas} petugas={p} />;
+              })}
+          </Box>
           <Box p="5">
             <Button
               onPress={() => setShowModal(true)}
