@@ -77,7 +77,7 @@ const Menu = () => {
           </Text>
         </Center>
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Agenda')}>
         <Center>
           <Flex
             w="16"

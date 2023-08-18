@@ -11,6 +11,7 @@ import Lapor from './src/screens/Lapor';
 import LaporanDetail from './src/screens/LaporanDetail';
 import Saran from './src/screens/Saran';
 import BeritaDetail from './src/screens/BeritaDetail';
+import Agenda from './src/screens/Agenda';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -55,6 +56,11 @@ export default function App() {
             name="BeritaDetail"
             component={BeritaDetail}
             options={{title: 'Detail Berita', headerShown: true}}
+          />
+          <Stack.Screen
+            name="Agenda"
+            component={Agenda}
+            options={{title: 'agenda', headerShown: true}}
           />
         </Stack.Navigator>
       </NavigationContainer>

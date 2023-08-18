@@ -11,7 +11,10 @@ function BeritaFlat() {
     fetcher,
   );
 
-  if (error) return <Text>Gagal memuat berita.</Text>;
+  if (error) {
+    return <Text>Gagal memuat berita.</Text>;
+  }
+
   if (isLoading) {
     return (
       <HStack space={2} justifyContent="center" m="5">
@@ -34,7 +37,7 @@ function BeritaFlat() {
   }
 }
 
-export default function Berita({navigation}) {
+export default function Berita() {
   return (
     <SafeAreaView>
       <Flex px="5">
