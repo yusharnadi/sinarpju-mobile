@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-catch-shadow */
 /* eslint-disable no-shadow */
 import {SafeAreaView, Image, StyleSheet} from 'react-native';
@@ -13,7 +14,6 @@ import {
   FormControl,
   Input,
   Stack,
-  Avatar,
 } from 'native-base';
 import axios from 'axios';
 import {Host} from '../utils/Host';
@@ -43,29 +43,23 @@ const LaporanDetail = ({route, navigation}) => {
     'pk.eyJ1IjoieXVzaGFybmFkaSIsImEiOiJjbGp3YzVpeWgwb2FiM2luMXQwNjkzMW0yIn0.3CXh3GgHOJCbUhZgEyrAYA',
   );
 
-  const getData = async () => {
-    try {
-      let res = await axios.get(`${Host}laporan/${id}`);
-      // console.log(res.data.data);
-      setData(res.data.data);
-      setPetugas(res.data.petugas);
-      setIsLoading(false);
-    } catch (err) {
-      if (err.response) {
-        // The client was given an error response (5xx, 4xx)
-        console.log(err.response.data.message);
+  const getData = () => {
+    axios
+      .get(`${Host}laporan/${id}`)
+      .then(function (response) {
+        setData(response.data.data);
+        setPetugas(response.data.petugas);
+        setIsLoading(false);
+      })
+      .catch(function (error) {
+        console.log(error);
         setError(true);
+      })
+      .finally(function () {
+        // always executed
+        console.log('Done Fetching Laporan Laporan Detail');
         setIsLoading(false);
-      } else if (err.request) {
-        // The client never received a response, and the request was never left
-        console.log(err.request);
-        setIsLoading(false);
-      } else {
-        // Anything else
-        console.log('Error', err.message);
-        setIsLoading(false);
-      }
-    }
+      });
   };
   React.useEffect(() => {
     getData();
@@ -92,21 +86,15 @@ const LaporanDetail = ({route, navigation}) => {
   });
 
   const submit = async values => {
-    console.log(typeof values);
-    // return;
     setShowModal(false);
     setIsLoading(true);
 
     try {
-      const response = await axios.post(
-        'https://sinarpju.digitaldev.id/api/laporan/' + data.id,
-        values,
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
+      const response = await axios.post(`${Host}laporan/${id}`, values, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-      );
+      });
 
       setIsSuccess(true);
       setIsLoading(false);
