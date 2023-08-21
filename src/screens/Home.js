@@ -2,25 +2,36 @@
 import {TouchableOpacity, StatusBar, SafeAreaView} from 'react-native';
 import React from 'react';
 import {Box, HStack, Text, ScrollView} from 'native-base';
-
 import axios from 'axios';
 import {Host} from '../utils/Host';
 import Loading from '../components/Loading';
 import LaporanSingle from '../components/LaporanSingle';
 import {useIsFocused} from '@react-navigation/native';
 import Menu from '../components/Menu';
-import Slider from '../components/Slider';
 import TopBar from '../components/TopBar';
+import {FlatListSlider} from 'react-native-flatlist-slider';
 
 export default function Home({navigation}) {
   const [laporan, setLaporan] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const isActive = useIsFocused();
 
+  const images = [
+    {
+      image: require('../assets/file-1.jpg'),
+    },
+    {
+      image: require('../assets/file-3.jpeg'),
+    },
+    {
+      image: require('../assets/file-4.jpeg'),
+    },
+  ];
+
   const fetchLaporan = () => {
     setIsLoading(true);
     axios
-      .get(`${Host}laporan?limit=20`)
+      .get(`${Host}laporan?limit=10`)
       .then(function (response) {
         setLaporan(response.data);
       })
@@ -45,7 +56,17 @@ export default function Home({navigation}) {
       <Box bg="muted.50" w="full">
         <ScrollView contentContainerStyle={{paddingBottom: 20}}>
           <TopBar />
-          <Slider />
+          {/* <Slider /> */}
+          <FlatListSlider
+            data={images}
+            timer={5000}
+            local
+            indicatorContainerStyle={{position: 'absolute', bottom: 20}}
+            indicatorActiveColor={'#1e3a8a'}
+            indicatorInActiveColor={'#ffffff'}
+            indicatorActiveWidth={30}
+            animation
+          />
           <Menu />
 
           {/* Laporan SECTIOn  */}

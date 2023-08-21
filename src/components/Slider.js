@@ -9,7 +9,7 @@ const Slider = () => {
       <Swiper
         autoplay={true}
         loop={true}
-        autoplayTimeou={10}
+        autoplayTimeout={10}
         loadMinimal={true}>
         <View style={styles.sliderWrapper}>
           <Image
@@ -21,6 +21,20 @@ const Slider = () => {
         <View style={styles.sliderWrapper}>
           <Image
             source={require('../assets/file-2.jpg')}
+            resizeMode="cover"
+            flex={1}
+          />
+        </View>
+        <View style={styles.sliderWrapper}>
+          <Image
+            source={require('../assets/file-3.jpeg')}
+            resizeMode="cover"
+            flex={1}
+          />
+        </View>
+        <View style={styles.sliderWrapper}>
+          <Image
+            source={require('../assets/file-4.jpeg')}
             resizeMode="cover"
             flex={1}
           />

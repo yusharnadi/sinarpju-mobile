@@ -7127,6 +7127,11 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-flatlist-slider@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-flatlist-slider/-/react-native-flatlist-slider-1.0.6.tgz#46b26e6d1b357f1934b3e4157cf3da2ad8a57596"
+  integrity sha512-F1C87eGIte9nfBU/MyNI6OOVKR/uCwFMrjVGv2j5u0LZjBm2WoEso96kPF2j0PIG8+XerD7Y2pmtGdCMCWxtcA==
+
 react-native-geolocation-service@^5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/react-native-geolocation-service/-/react-native-geolocation-service-5.3.1.tgz#4ce1017789da6fdfcf7576eb6f59435622af4289"
