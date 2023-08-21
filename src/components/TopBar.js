@@ -1,24 +1,20 @@
-import {TouchableOpacity} from 'react-native';
 import React from 'react';
-import {Box, HStack, Flex, Icon} from 'native-base';
+import {Box, HStack} from 'native-base';
 import Logo from '../assets/logo.svg';
-import {useNavigation} from '@react-navigation/native';
-import {BellIcon} from 'react-native-heroicons/outline';
 
 const TopBar = () => {
-  const navigation = useNavigation();
   return (
     <Box bgColor="blue.900" px="5" py="2.5">
       <HStack justifyContent="space-between" alignItems="center">
         <Logo />
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        {/* <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Flex direction="row" align="center">
-            {/* <Text bold fontSize="xs" color="light.50" mr="2">
+            <Text bold fontSize="xs" color="light.50" mr="2">
               Masuk
-            </Text> */}
+            </Text>
             <Icon as={BellIcon} color="muted.50" size="12" />
           </Flex>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </HStack>
     </Box>
   );

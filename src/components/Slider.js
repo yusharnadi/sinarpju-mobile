@@ -1,42 +1,40 @@
-import {Image} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
-import {AspectRatio, Box} from 'native-base';
+import {AspectRatio} from 'native-base';
 import Swiper from 'react-native-swiper';
 
 const Slider = () => {
   return (
     <AspectRatio ratio={16 / 9} width="full">
-      <Box>
-        <Swiper
-          autoplay={true}
-          loop={true}
-          autoplayTimeou={10}
-          loadMinimal={true}>
+      <Swiper
+        autoplay={true}
+        loop={true}
+        autoplayTimeou={10}
+        loadMinimal={true}>
+        <View style={styles.sliderWrapper}>
           <Image
-            source={{
-              uri: 'https://dishub.singkawangkota.go.id/wp-content/uploads/2023/03/20230301-B-1068x801.jpg',
-            }}
+            source={require('../assets/file-1.jpg')}
             resizeMode="cover"
             flex={1}
           />
+        </View>
+        <View style={styles.sliderWrapper}>
           <Image
-            source={{
-              uri: 'https://dishub.singkawangkota.go.id/wp-content/uploads/2023/03/20230301-A.jpg',
-            }}
+            source={require('../assets/file-2.jpg')}
             resizeMode="cover"
             flex={1}
           />
-          <Image
-            source={{
-              uri: 'https://dishub.singkawangkota.go.id/wp-content/uploads/2023/03/20230308-B-1024x589.jpg',
-            }}
-            resizeMode="cover"
-            flex={1}
-          />
-        </Swiper>
-      </Box>
+        </View>
+      </Swiper>
     </AspectRatio>
   );
 };
 
 export default Slider;
+const styles = StyleSheet.create({
+  sliderWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
