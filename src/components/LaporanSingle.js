@@ -20,7 +20,6 @@ export default function LaporanSingle({laporan}) {
     'DD-MM-YYYY HH:mm',
   );
   const navigation = useNavigation();
-  // console.log(navigation);
   const Status = () => {
     if (laporan.status === 1) {
       return (

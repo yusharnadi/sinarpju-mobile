@@ -2,7 +2,6 @@ import React from 'react';
 import {Avatar, Box, Text} from 'native-base';
 
 const Petugas = ({petugas}) => {
-  console.log(petugas);
   const nick = petugas.namaPetugas
     .toUpperCase()
     .split(' ')

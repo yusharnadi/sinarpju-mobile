@@ -27,6 +27,7 @@ import Success from '../components/Success';
 import Error from '../components/Error';
 import Status from '../components/Status';
 import Petugas from '../components/Petugas';
+import moment from 'moment/moment';
 
 const LaporanDetail = ({route, navigation}) => {
   const {id} = route.params;
@@ -98,7 +99,6 @@ const LaporanDetail = ({route, navigation}) => {
 
       setIsSuccess(true);
       setIsLoading(false);
-      console.log(response.data);
       return;
     } catch (error) {
       if (error.response) {
@@ -150,7 +150,6 @@ const LaporanDetail = ({route, navigation}) => {
   const handleError = () => {
     console.log('Error UI Rendered');
     setIsError(false);
-    // navigation.popToTop();
   };
 
   if (isError) {
@@ -224,12 +223,31 @@ const LaporanDetail = ({route, navigation}) => {
               />
             </Mapbox.MapView>
           </Box>
+          <Box p="5" backgroundColor="white">
+            <Text>
+              Waktu Dilaporakan :{' '}
+              {moment(data.created_at, 'YYYY-MM-DDTHH:mm:ssZ').format(
+                'DD-MM-YYYY HH:mm',
+              )}
+            </Text>
+          </Box>
+
           <Text px="5" py={2} bold>
             Status Laporan
           </Text>
           <Box p="5" backgroundColor="white">
             {data && <Status status={data.status} />}
           </Box>
+          {data.status === 3 && (
+            <Box p="5" backgroundColor="white">
+              <Text>
+                Waktu Diselesaikan :{' '}
+                {moment(data.updated_at, 'YYYY-MM-DDTHH:mm:ssZ').format(
+                  'DD-MM-YYYY HH:mm',
+                )}
+              </Text>
+            </Box>
+          )}
           {petugas.length > 0 && (
             <Text px="5" py={2} bold>
               Petugas Lapangan
@@ -241,7 +259,7 @@ const LaporanDetail = ({route, navigation}) => {
                 return <Petugas key={p.idPetugas} petugas={p} />;
               })}
           </Box>
-          <Box p="5">
+          <Box p="5" mb={'5'}>
             <Button
               onPress={() => setShowModal(true)}
               size="lg"
