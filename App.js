@@ -14,9 +14,9 @@ import BeritaDetail from './src/screens/BeritaDetail';
 import Agenda from './src/screens/Agenda';
 
 const Stack = createNativeStackNavigator();
+
 export default function App() {
   return (
-    //
     <NativeBaseProvider>
       <NavigationContainer>
         <Stack.Navigator

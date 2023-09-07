@@ -13,7 +13,7 @@ import {
 import {Image, TouchableOpacity} from 'react-native';
 import moment from 'moment';
 import {useNavigation} from '@react-navigation/native';
-import {ClockIcon} from 'react-native-heroicons/outline';
+import {ClockIcon} from 'react-native-heroicons/solid';
 
 export default function LaporanSingle({laporan}) {
   const date = moment(laporan.created_at, 'YYYY-MM-DDTHH:mm:ssZ').format(

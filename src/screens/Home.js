@@ -9,24 +9,13 @@ import LaporanSingle from '../components/LaporanSingle';
 import {useIsFocused} from '@react-navigation/native';
 import Menu from '../components/Menu';
 import TopBar from '../components/TopBar';
-import {FlatListSlider} from 'react-native-flatlist-slider';
+import Slider from '../components/Slider';
 
 export default function Home({navigation}) {
   const [laporan, setLaporan] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const isActive = useIsFocused();
 
-  const images = [
-    {
-      image: require('../assets/file-1.jpg'),
-    },
-    {
-      image: require('../assets/file-3.jpeg'),
-    },
-    {
-      image: require('../assets/file-4.jpeg'),
-    },
-  ];
+  const isActive = useIsFocused();
 
   const fetchLaporan = () => {
     setIsLoading(true);
@@ -39,7 +28,6 @@ export default function Home({navigation}) {
         console.log(error);
       })
       .finally(function () {
-        // always executed
         console.log('Done Fetching Laporan HOme');
         setIsLoading(false);
       });
@@ -56,17 +44,7 @@ export default function Home({navigation}) {
       <Box bg="muted.50" w="full">
         <ScrollView contentContainerStyle={{paddingBottom: 20}}>
           <TopBar />
-          {/* <Slider /> */}
-          <FlatListSlider
-            data={images}
-            timer={5000}
-            local
-            indicatorContainerStyle={{position: 'absolute', bottom: 20}}
-            indicatorActiveColor={'#1e3a8a'}
-            indicatorInActiveColor={'#ffffff'}
-            indicatorActiveWidth={30}
-            animation
-          />
+          <Slider />
           <Menu />
 
           {/* Laporan SECTIOn  */}

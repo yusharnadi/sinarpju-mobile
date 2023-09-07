@@ -1,54 +1,28 @@
-import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
-import {AspectRatio} from 'native-base';
-import Swiper from 'react-native-swiper';
+import {FlatListSlider} from 'react-native-flatlist-slider';
+import {Host} from '../utils/Host';
+import {Text} from 'react-native';
+import useSWR from 'swr';
+import {fetcher} from '../utils/fetcher';
+import Loading from './Loading';
 
 const Slider = () => {
+  const {isLoading, error, data} = useSWR(`${Host}slider`, fetcher);
+  if (error) return <Text>Error loading slider</Text>;
+  if (isLoading) return <Loading />;
+
   return (
-    <AspectRatio ratio={16 / 9} width="full">
-      <Swiper
-        autoplay={true}
-        loop={true}
-        autoplayTimeout={10}
-        loadMinimal={true}>
-        <View style={styles.sliderWrapper}>
-          <Image
-            source={require('../assets/file-1.jpg')}
-            resizeMode="cover"
-            flex={1}
-          />
-        </View>
-        <View style={styles.sliderWrapper}>
-          <Image
-            source={require('../assets/file-2.jpg')}
-            resizeMode="cover"
-            flex={1}
-          />
-        </View>
-        <View style={styles.sliderWrapper}>
-          <Image
-            source={require('../assets/file-3.jpeg')}
-            resizeMode="cover"
-            flex={1}
-          />
-        </View>
-        <View style={styles.sliderWrapper}>
-          <Image
-            source={require('../assets/file-4.jpeg')}
-            resizeMode="cover"
-            flex={1}
-          />
-        </View>
-      </Swiper>
-    </AspectRatio>
+    <FlatListSlider
+      data={data.data}
+      imageKey="gambar"
+      timer={5000}
+      indicatorContainerStyle={{position: 'absolute', bottom: 20}}
+      indicatorActiveColor={'#1e3a8a'}
+      indicatorInActiveColor={'#ffffff'}
+      indicatorActiveWidth={30}
+      animation
+    />
   );
 };
 
 export default Slider;
-const styles = StyleSheet.create({
-  sliderWrapper: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
