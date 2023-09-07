@@ -182,12 +182,12 @@ const LaporanDetail = ({route, navigation}) => {
             <Text numberOfLines={1}>{data.namaPelapor}</Text>
           </Box>
 
-          <Text px="5" py={2} bold>
+          {/* <Text px="5" py={2} bold>
             Nomor Handphone
           </Text>
           <Box p="5" backgroundColor="white">
             <Text numberOfLines={1}>{data.noHp}</Text>
-          </Box>
+          </Box> */}
 
           <Text px="5" py={2} bold>
             Keterangan
