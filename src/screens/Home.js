@@ -11,16 +11,7 @@ import useSWR from 'swr';
 import {getLaporan, laporanUrlEndpoint} from '../apis/LaporanApi';
 
 export default function Home({navigation}) {
-  const {
-    isLoading,
-    error,
-    data: laporan,
-  } = useSWR(laporanUrlEndpoint, getLaporan);
-
-  if (isLoading) {
-    return <Loading />;
-  }
-  if (error) return <Text>Gagal memuat laporan . . .</Text>;
+  const {data: laporan} = useSWR(laporanUrlEndpoint, getLaporan);
 
   return (
     <SafeAreaView flex={1}>
@@ -30,8 +21,6 @@ export default function Home({navigation}) {
           <TopBar />
           <Slider />
           <Menu />
-
-          {/* Laporan SECTION  */}
           <HStack bg="white" p="5" alignItems="center">
             <Text bold color="muted.600" fontSize="lg" flex={1}>
               Laporan Terbaru
@@ -49,7 +38,7 @@ export default function Home({navigation}) {
             flexDirection="row"
             flexWrap="wrap"
             justifyContent="center">
-            {laporan.success && laporan.data.length > 0 ? (
+            {laporan?.success && laporan?.data.length > 0 ? (
               laporan.data.map(item => {
                 return <LaporanSingle key={item.id} laporan={item} />;
               })
