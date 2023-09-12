@@ -29,6 +29,9 @@ import Geolocation from 'react-native-geolocation-service';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Success from '../components/Success';
 import Error from '../components/Error';
+import {useSWRConfig} from 'swr';
+import {laporanUrlEndpoint} from '../apis/LaporanApi';
+import {Host} from '../utils/Host';
 
 const Lapor = ({navigation}) => {
   const [image, setImage] = React.useState(null);
@@ -39,6 +42,8 @@ const Lapor = ({navigation}) => {
   const [isError, setIsError] = React.useState(false);
 
   const [isLoading, setIsLoading] = React.useState(false);
+
+  const {mutate} = useSWRConfig();
 
   React.useEffect(() => {
     getLocation();
@@ -85,16 +90,13 @@ const Lapor = ({navigation}) => {
     data.append('latitude', location?.coords?.latitude);
     data.append('longitude', location?.coords?.longitude);
     try {
-      const response = await axios.post(
-        'https://sinarpju.digitaldev.id/api/laporan/',
-        data,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+      const response = await axios.post(`${Host}laporan`, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
         },
-      );
+      });
 
+      mutate(laporanUrlEndpoint);
       setIsSuccess(true);
       setIsLoading(false);
       console.log(response.data);

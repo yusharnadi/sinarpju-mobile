@@ -28,6 +28,8 @@ import Error from '../components/Error';
 import Status from '../components/Status';
 import Petugas from '../components/Petugas';
 import moment from 'moment/moment';
+import {useSWRConfig} from 'swr';
+import {laporanUrlEndpoint} from '../apis/LaporanApi';
 
 const LaporanDetail = ({route, navigation}) => {
   const {id} = route.params;
@@ -39,6 +41,8 @@ const LaporanDetail = ({route, navigation}) => {
 
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
+
+  const {mutate} = useSWRConfig();
 
   Mapbox.setAccessToken(
     'pk.eyJ1IjoieXVzaGFybmFkaSIsImEiOiJjbGp3YzVpeWgwb2FiM2luMXQwNjkzMW0yIn0.3CXh3GgHOJCbUhZgEyrAYA',
@@ -96,7 +100,7 @@ const LaporanDetail = ({route, navigation}) => {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       });
-
+      mutate(laporanUrlEndpoint);
       setIsSuccess(true);
       setIsLoading(false);
       return;
