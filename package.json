@@ -31,6 +31,7 @@
     "react-native-render-html": "^6.3.4",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "^3.22.1",
+    "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "12.1.1",
     "react-native-swiper": "^1.6.0",
     "swr": "^2.2.0",

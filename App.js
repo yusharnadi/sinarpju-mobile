@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Home from './src/screens/Home';
 
 import {NativeBaseProvider} from 'native-base';
@@ -12,10 +12,14 @@ import LaporanDetail from './src/screens/LaporanDetail';
 import Saran from './src/screens/Saran';
 import BeritaDetail from './src/screens/BeritaDetail';
 import Agenda from './src/screens/Agenda';
+import SplashScreen from 'react-native-splash-screen';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
   return (
     <NativeBaseProvider>
       <NavigationContainer>
