@@ -17,7 +17,9 @@ export default function Home({navigation}) {
     <SafeAreaView flex={1}>
       <StatusBar barStyle="light-content" backgroundColor="#1e3a8a" />
       <Box bg="muted.50">
-        <ScrollView contentContainerStyle={{paddingBottom: 20}}>
+        <ScrollView
+          contentContainerStyle={{paddingBottom: 20}}
+          showsVerticalScrollIndicator={false}>
           <TopBar />
           <Slider />
           <Menu />
