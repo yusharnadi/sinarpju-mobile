@@ -1,22 +1,39 @@
 import React from 'react';
-import {Box, Fab, Icon, Flex, Spinner, HStack, Heading} from 'native-base';
+import {
+  Box,
+  Fab,
+  Icon,
+  Flex,
+  Spinner,
+  HStack,
+  Heading,
+  Text,
+} from 'native-base';
 import {PlusIcon} from 'react-native-heroicons/solid';
-import {FlatList, SafeAreaView, Text} from 'react-native';
-import useSWR from 'swr';
-import {fetcher} from '../utils/fetcher';
+import {FlatList, SafeAreaView} from 'react-native';
+import useSWRInfinite from 'swr/infinite';
 import LaporanSingle from '../components/LaporanSingle';
+import {getLaporanPaginated} from '../apis/LaporanApi';
 
-function LaporanFlat() {
-  const {data, error, isLoading} = useSWR(
-    'https://sinarpju.digitaldev.id/api/laporan',
-    fetcher,
+export default function Laporan({navigation}) {
+  const getKey = (pageIndex, previousPageData) => {
+    pageIndex += 1;
+    if (previousPageData && !previousPageData.length) return null;
+    return `laporan?page=${pageIndex}`;
+  };
+
+  const {data, error, isLoading, size, setSize} = useSWRInfinite(
+    getKey,
+    getLaporanPaginated,
+    {initialSize: 1, parallel: false},
   );
 
-  if (error) return <Text>failed to load</Text>;
+  if (error) return <Text>Gagal memuat laporan dari server.</Text>;
+
   if (isLoading) {
     return (
       <HStack space={2} justifyContent="center" m="5">
-        <Spinner accessibilityLabel="Loading posts" />
+        <Spinner accessibilityLabel="Loading Laporan" />
         <Heading color="blue.900" fontSize="md">
           Loading
         </Heading>
@@ -24,24 +41,24 @@ function LaporanFlat() {
     );
   }
 
-  // console.log(data.success);
-  if (data.success && data.data.length >= 1) {
-    return (
-      <FlatList
-        data={data.data}
-        renderItem={({item}) => <LaporanSingle laporan={item} />}
-        keyExtractor={item => item.id}
-      />
-    );
-  }
-}
+  const laporan = data ? [].concat(...data) : [];
 
-export default function Laporan({navigation}) {
   return (
     <Box>
       <SafeAreaView>
         <Flex px="5">
-          <LaporanFlat />
+          <FlatList
+            data={laporan}
+            renderItem={({item}) => <LaporanSingle laporan={item} />}
+            showsVerticalScrollIndicator={false}
+            initialNumToRender={10}
+            keyExtractor={item => item.id}
+            onEndReachedThreshold={0.5}
+            onEndReached={() => setSize(size + 1)}
+            ListFooterComponent={
+              <Spinner accessibilityLabel="Loading Laporan" />
+            }
+          />
         </Flex>
       </SafeAreaView>
       <Fab

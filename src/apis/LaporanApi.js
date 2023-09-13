@@ -10,3 +10,7 @@ export const laporanUrlEndpoint = 'laporan?limit=10';
 export const getLaporan = () => {
   return laporanApi.get(laporanUrlEndpoint).then(res => res.data);
 };
+
+export const getLaporanPaginated = url => {
+  return laporanApi.get(url).then(res => res.data.data);
+};
