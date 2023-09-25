@@ -93,6 +93,7 @@ const Lapor = ({navigation}) => {
       const response = await axios.post(`${Host}laporan`, data, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          token: 'tokenku123987347@1234',
         },
       });
 
